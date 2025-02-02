@@ -1,0 +1,5 @@
+.model zero2
+.outputs uscita1 uscita0
+.names uscita1 
+.names uscita0
+.end

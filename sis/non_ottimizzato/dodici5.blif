@@ -1,0 +1,11 @@
+.model dodici5
+.outputs uscita4 uscita3 uscita2 uscita1 uscita0
+.names uscita4
+.names uscita3
+1
+.names uscita2
+1
+.names uscita1
+.names uscita0
+.end
+

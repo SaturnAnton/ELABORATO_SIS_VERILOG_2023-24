@@ -1,0 +1,134 @@
+.model ELABORAZIONE
+.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0 INIZIA PM MANCHE1 MANCHE0
+.outputs VALIDA NP PMAX
+
+#costanti
+.subckt zero1 uscita=ZERO
+.subckt zero2 uscita1=Z1 uscita0=Z0
+.subckt zero2 uscita1=ct1 uscita0=ct0
+.subckt zero2 uscita1=bf1 uscita0=bf0
+.subckt zero5 uscita4=z4 uscita3=z3 uscita2=z2 uscita1=z1 uscita0=z0
+.subckt uno5 uscita4=one4  uscita3=one3  uscita2=one2  uscita1=one1  uscita0=one0
+.subckt tre5 uscita4=TR4  uscita3=TR3  uscita2=TR2  uscita1=TR1  uscita0=TR0
+.subckt due5 uscita4=due4  uscita3=due3  uscita2=due2  uscita1=due1  uscita0=due0
+.subckt quattro5 uscita4=q4  uscita3=q3  uscita2=q2  uscita1=q1  uscita0=q0
+.subckt otto5 uscita4=ot4 uscita3=ot3 uscita2=ot2 uscita1=ot1 uscita0=ot0
+.subckt dodici5 uscita4=do4 uscita3=do3 uscita2=do2 uscita1=do1 uscita0=do0
+
+#demultiplexer per controllare se inizia è uguale a 1 o a zero
+.subckt DEMUX2 S0=INIZIA IN1=PRIMO1 IN0=PRIMO0 X1=ITA1 X0=ITA0 Y1=USA1 Y0=USA0
+.subckt DEMUX2 S0=INIZIA IN1=SECONDO1 IN0=SECONDO0 X1=ita1 X0=ita0 Y1=usa1 Y0=usa0
+
+#multiplexer per concatenare le mosse
+.subckt MUX45 X1=USA1 X0=USA0 a4=z4 a3=z3 a2=z2 a1=z1 a0=z0 b4=q4 b3=q3 b2=q2 b1=q1 b0=q0 c4=ot4 c3=ot3 c2=ot2 c1=ot1 c0=ot0 d4=do4 d3=do3 d2=do2 d1=do1 d0=do0 o4=conp4 o3=conp3 o2=conp2 o1=conp1 o0=conp0
+.subckt MUX45 X1=usa1 X0=usa0 a4=z4 a3=z3 a2=z2 a1=z1 a0=z0 b4=one4 b3=one3 b2=one2 b1=one1 b0=one0 c4=due4 c3=due3 c2=due2 c1=due1 c0=due0 d4=TR4 d3=TR3 d2=TR2 d1=TR1 d0=TR0 o4=cons4 o3=cons3 o2=cons2 o1=cons1 o0=cons0
+
+#sommatore per concatenare le mosse
+.subckt SOMMATORE5 A4=conp4 A3=conp3 A2=conp2 A1=conp1 A0=conp0 B4=cons4 B3=cons3 B2=cons2 B1=cons1 B0=cons0 CIN=ZERO O4=CON4 O3=CON3 O2=CON2 O1=CON1 O0=CON0 COUT=COUT0
+
+#sommatore per trovare le partite totali
+.subckt SOMMATORE5 A4=CON4 A3=CON3 A2=CON2 A1=CON1 A0=CON0 B4=q4 B3=q3 B2=q2 B1=q1 B0=q0 CIN=ZERO O4=rep4 O3=rep3 O2=rep2 O1=rep1 O0=rep0 COUT=COUT1
+
+#multiplexer per capire che entrata dare al registro
+.subckt MUX5 X0=INIZIA a4=coco4 a3=coco3 a2=coco2 a1=coco1 a0=coco0 b4=rep4 b3=rep3 b2=rep2 b1=rep1 b0=rep0 o4=R4 o3=R3 o2=R2 o1=R1 o0=R0
+
+#registro per le partite totali
+.subckt REGISTRO5 A4=R4 A3=R3 A2=R2 A1=R1 A0=R0 O4=r4 O3=r3 O2=r2 O1=r1 O0=r0 
+
+#multiplezer per resettare il registro delle partite totali
+.subckt MUX5 X0=INIZIA a4=r4 a3=r3 a2=r2 a1=r1 a0=r0 b4=z4 b3=z3 b2=z2 b1=z1 b0=rep0 o4=coco4 o3=coco3 o2=coco2 o1=coco1 o0=coco0
+
+
+#controllare che le mosse non siano uguali a zero
+.subckt UGUALE2 A1=ITA1 A0=ITA0 B1=ct1 B0=ct0 O=pz
+.subckt UGUALE2 A1=ita1 A0=ita0 B1=bf1 B0=bf0 O=sz
+
+#or per controllare se almeno una dei due è uguale a zero
+.subckt OR A=pz B=sz O=VL
+
+
+#demultiplex per capire se è la prima mossa
+.subckt DEMUX2 S0=PM IN1=ITA1 IN0=ITA0 X1=SI1 X0=SI0 Y1=si1 Y0=si0
+.subckt DEMUX2 S0=PM IN1=ita1 IN0=ita0 X1=NO1 X0=NO0 Y1=no1 Y0=no0
+
+#multiplexer per capire se è la prima mossa oppure no
+.subckt MUX2 X0=PM a1=UP1 a0=UP0 b1=si1 b0=si0 o1=umossap1 o0=umossap0
+.subckt MUX2 X0=PM a1=US1 a0=US0 b1=no1 b0=no0 o1=umossas1 o0=umossas0
+
+#comparatore per controllare se la mossa attuale è uguale all'ultima mossa dell'ultimo
+.subckt UGUALE2 A1=SI1 A0=SI0 B1=umossap1 B0=umossap0 O=ro
+.subckt UGUALE2 A1=NO1 A0=NO0 B1=umossas1 B0=umossas0 O=RO
+
+#or per capire se c'è almeno una mossa uguale all'ultima
+.subckt OR A=ro B=RO O=val
+
+#or per vedere se tutta la manche è valida
+.subckt OR A=VL B=val O=VALIDA
+
+#multiplexer per capire se la sommare uno oppure no al contatore delle partite
+.subckt MUX5 X0=VALIDA a4=one4 a3=one3 a2=one2 a1=one1 a0=one0 b4=z4 b3=z3 b2=z2 b1=z1 b0=z0 o4=agg4 o3=agg3 o2=agg2 o1=agg1 o0=agg0
+
+#sommatore per aggiungere uno o zero al registro che conta le partite
+.subckt SOMMATORE5 A4=contp4 A3=contp3 A2=contp2 A1=contp1 A0=contp0 B4=agg4 B3=agg3 B2=agg2 B1=agg1 B0=agg0 CIN=ZERO O4=controllo4 O3=controllo3 O2=controllo2 O1=controllo1 O0=controllo0 COUT=COUT2
+
+#multiplexer per resettare i registri
+.subckt MUX5 X0=INIZIA a4=controllo4 a3=controllo3 a2=controllo2 a1=controllo1 a0=controllo0 b4=z4 b3=z3 b2=z2 b1=z1 b0=z0 o4=plus4 o3=plus3 o2=plus2 o1=plus1 o0=plus0
+
+#registro per contare le partite
+.subckt REGISTRO5 A4=plus4 A3=plus3 A2=plus2 A1=plus1 A0=plus0 O4=contp4 O3=contp3 O2=contp2 O1=contp1 O0=contp0
+
+#maggiore per vedere se il numero delle partite è maggiore di 4
+.subckt 5gt A4=controllo4 A3=controllo3 A2=controllo2 A1=controllo1 A0=controllo0 B4=TR4 B3=TR3 B2=TR2 B1=TR1 B0=TR0 AgtB=NP
+
+#uguale per capite se il numero di partite è arrivato al massimo possibile
+.subckt UGUALE5 A4=controllo4 A3=controllo3 A2=controllo2 A1=controllo1 A0=controllo0 B4=r4 B3=r3 B2=r2 B1=r1 B0=r0 O=PMAX
+
+#multiplexer per capire chi ha vinto e non fargli ripetere la mossa
+.subckt MUX42 X1=MANCHE1 X0=MANCHE0 a1=Z1 a0=Z0 b1=ITA1 b0=ITA0 c1=Z1 c0=Z0 d1=Z1 d0=Z0 o1=uuu1 o0=uuu0 
+.subckt MUX42 X1=MANCHE1 X0=MANCHE0 a1=Z1 a0=Z0 b1=Z1 b0=Z0 c1=ita1 c0=ita0 d1=Z1 d0=Z0 o1=vvv1 o0=vvv0
+
+#multiplexer per resettare i registri
+.subckt MUX2 X0=INIZIA a1=uuu1 a0=uuu0 b1=Z1 b0=Z0 o1=upi1 o0=upi0
+.subckt MUX2 X0=INIZIA a1=vvv1 a0=vvv0 b1=Z1 b0=Z0 o1=usi1 o0=usi0
+
+#registri per la mossa vincente
+.subckt REGISTRO2 A1=upi1 A0=upi0 O1=UP1 O0=UP0
+.subckt REGISTRO2 A1=usi1 A0=usi0 O1=US1 O0=US0
+
+
+.end
+
+.search uguale5.blif
+.search maggiore5.blif
+.search registro5.blif
+.search sommatore5.blif
+.search mux5.blif
+.search mux2.blif
+.search or.blif
+.search uguale2.blif
+.search registro2.blif
+.search demux2.blif
+.search mux45.blif
+.search mux42.blif
+.search zero1.blif
+.search zero2.blif
+.search zero5.blif
+.search uno5.blif
+.search due5.blif
+.search tre5.blif
+.search quattro5.blif
+.search otto5.blif
+.search dodici5.blif
+
+
+
+
+
+
+
+
+
+
+
+
+

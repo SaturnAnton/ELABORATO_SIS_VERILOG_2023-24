@@ -1,0 +1,12 @@
+.model DEMUX2
+.inputs S0 IN1 IN0
+.outputs X1 X0 Y1 Y0
+.names S0 IN1 IN0 X1 
+01- 1
+.names S0 IN1 IN0 Y1
+11- 1
+.names S0 IN1 IN0 X0 
+0-1 1
+.names S0 IN1 IN0 Y0 
+1-1 1
+.end
