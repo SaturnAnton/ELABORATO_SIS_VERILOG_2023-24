@@ -1,0 +1,183 @@
+.model MORRA_CINESE
+.inputs PRIMO1 PRIMO0 SECONDO1 SECONDO0 INIZIA
+.outputs MANCHE1 MANCHE0 PARTITA1 PARTITA0
+.latch    [32] LatchOut_v8   1
+.latch    [33] LatchOut_v9   1
+.latch    R4 [401] re NIL 0
+.latch    R3 [402] re NIL 0
+.latch    R2 [403] re NIL 0
+.latch    R1 [404] re NIL 0
+.latch    coco0 [405] re NIL 0
+.latch    plus4 contp4 re NIL 0
+.latch    plus3 contp3 re NIL 0
+.latch    plus2 contp2 re NIL 0
+.latch    plus1 contp1 re NIL 0
+.latch    plus0 contp0 re NIL 0
+.latch    uuu1 UP1 re NIL 0
+.latch    uuu0 UP0 re NIL 0
+.latch    vvv1 US1 re NIL 0
+.latch    vvv0 US0 re NIL 0
+.names VALIDA ITA1 ITA0 ita1 [621] [626] [638] MANCHE1
+0----0- 1
+---0--1 1
+0-01--- 1
+01--1-- 1
+.names MANCHE1 VALIDA ITA1 ita1 ita0 [621] [638] MANCHE0
+00----- 1
+-----11 1
+-000--- 1
+-01-0-- 1
+.names PRIMO1 PRIMO0 SECONDO1 SECONDO0 PARTITA0 PMAX VALIDA LatchOut_v8 \
+LatchOut_v9 [610] [616] [639] PARTITA1
+-------0--1- 1
+0--0-10----- 1
+-10-1---1--- 1
+-0-01---1--- 1
+1-11-------1 1
+110--10----- 1
+-011-10----- 1
+0--0--00-1-- 1
+110---00-1-- 1
+-011--00-1-- 1
+.names PRIMO1 PRIMO0 SECONDO1 SECONDO0 VALIDA [612] [616] [637] [639] PARTITA0
+------11- 1
+0--1----1 1
+1--0----1 1
+-00-01--- 1
+-111----1 1
+0-1101--- 1
+11-001--- 1
+.names controllo2 controllo1 [403] [404] [405] [370] [607] [608] PMAX
+11111111 1
+01011111 1
+10101111 1
+00001111 1
+11110011 1
+01010011 1
+10100011 1
+00000011 1
+.names ITA1 ITA0 ita1 ita0 UP1 UP0 US1 US0 [621] VALIDA
+00------- 1
+--00----- 1
+0---01--- 1
+-0--10--- 1
+--0---01- 1
+---0--10- 1
+------111 1
+11--11--- 1
+.names INIZIA VALIDA LatchOut_v8 LatchOut_v9 [33] ita0 [615] [616] [625] [626] \
+[638] [32]
+1---------- 1
+---01------ 1
+-0----1---- 1
+--1-----1-- 1
+-------1-1- 1
+----10----1 1
+.names INIZIA MANCHE1 VALIDA LatchOut_v8 LatchOut_v9 uuu1 uuu0 [616] [625] \
+[637] [33]
+1--------- 1
+-------001 1
+-000---0-- 1
+----10001- 1
+.names contp4 [628] controllo4
+11 1
+00 1
+.names contp3 [629] controllo3
+11 1
+00 1
+.names contp2 [630] controllo2
+11 1
+00 1
+.names contp1 [631] controllo1
+11 1
+00 1
+.names INIZIA PRIMO1 ITA1
+01 1
+.names INIZIA PRIMO0 ITA0
+01 1
+.names INIZIA SECONDO1 ita1
+01 1
+.names INIZIA SECONDO0 ita0
+01 1
+.names SECONDO0 INIZIA [405] coco0
+11- 1
+-01 1
+.names PRIMO1 PRIMO0 INIZIA [401] R4
+--01 1
+111- 1
+.names PRIMO1 PRIMO0 INIZIA [402] R3
+--01 1
+011- 1
+101- 1
+.names PRIMO0 INIZIA [403] R2
+01- 1
+-01 1
+.names SECONDO1 INIZIA [404] R1
+11- 1
+-01 1
+.names VALIDA contp0 [370]
+11 1
+00 1
+.names INIZIA controllo4 plus4
+01 1
+.names INIZIA controllo3 plus3
+01 1
+.names INIZIA controllo2 plus2
+01 1
+.names INIZIA controllo1 plus1
+01 1
+.names INIZIA [370] plus0
+01 1
+.names MANCHE1 MANCHE0 ITA1 uuu1
+011 1
+.names MANCHE1 MANCHE0 ITA0 uuu0
+011 1
+.names MANCHE1 MANCHE0 ita1 vvv1
+101 1
+.names MANCHE1 MANCHE0 ita0 vvv0
+101 1
+.names controllo4 [401] [607]
+11 1
+00 1
+.names controllo3 [402] [608]
+11 1
+00 1
+.names controllo4 controllo3 controllo2 [610]
+1-- 1
+-1- 1
+--1 1
+.names PMAX [610] [637] [612]
+1-- 1
+-11 1
+.names ITA1 ITA0 ita1 [621] [615]
+-00- 1
+0--1 1
+.names PMAX VALIDA [616]
+10 1
+.names ita1 ita0 [621]
+11 1
+.names MANCHE0 VALIDA [625]
+1- 1
+-1 1
+.names ITA1 ita0 [626]
+1- 1
+-1 1
+.names controllo3 contp3 [628]
+1- 1
+-0 1
+.names controllo2 contp2 [629]
+1- 1
+-0 1
+.names controllo1 contp1 [630]
+1- 1
+-0 1
+.names [370] contp0 [631]
+1- 1
+-0 1
+.names LatchOut_v8 LatchOut_v9 [637]
+10 1
+.names VALIDA ITA0 [638]
+01 1
+.names LatchOut_v9 [616] [639]
+11 1
+.end
